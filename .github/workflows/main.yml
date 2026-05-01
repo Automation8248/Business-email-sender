@@ -1,0 +1,35 @@
+name: Cold Email Automation
+
+on:
+  schedule:
+    - cron: '0 0 * * *' 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Python Script
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: python send_emails.py
+
+      - name: Commit Updated History
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add history.json
+          git commit -m "Update email history" || exit 0
+          git push
