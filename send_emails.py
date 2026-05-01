@@ -9,6 +9,9 @@ from email.mime.multipart import MIMEMultipart
 def run_automation():
     sender_email = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
+    
+    # YAHAN APNA ASLI AFFILIATE LINK DAALEIN
+    my_affiliate_link = "https://mangools.com#a_aid=aapka_id" 
 
     history_file = 'history.json'
     history = json.load(open(history_file, 'r')) if os.path.exists(history_file) else []
@@ -32,7 +35,12 @@ def run_automation():
 
         for name, email in to_send:
             template = random.choice(all_templates)
+            
+            # 1. Agent ka naam replace karna
             personalized_text = template.replace("(agent name)", name)
+            
+            # 2. Affiliate link replace karna (Bracket hat jayega)
+            personalized_text = personalized_text.replace("[Your Affiliate Link]", my_affiliate_link)
             
             lines = personalized_text.split('\n')
             subject_line = lines[0].replace("Subject: ", "").strip()
