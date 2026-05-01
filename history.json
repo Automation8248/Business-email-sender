@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "name": "Rahul",
+        "email": "automation.agent8248@gmail.com",
+        "date": "2026-05-01 05:38",
+        "subject": "You are losing local home buyers to your competitors",
+        "status": "Sent"
+    },
+    {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "date": "2026-05-01 05:38",
+        "subject": "You are losing local home buyers to your competitors",
+        "status": "Sent"
+    }
+]
