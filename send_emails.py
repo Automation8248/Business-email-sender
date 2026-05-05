@@ -11,7 +11,7 @@ def run_automation():
     password = os.environ['EMAIL_PASS']
     
     # YAHAN APNA ASLI AFFILIATE LINK DAALEIN
-    my_affiliate_link = "https://mangools.com#a_aid=aapka_id" 
+    my_affiliate_link = "https://shorturl.at/z0wYR" 
 
     history_file = 'history.json'
     history = json.load(open(history_file, 'r')) if os.path.exists(history_file) else []
