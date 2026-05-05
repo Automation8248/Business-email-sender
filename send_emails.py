@@ -17,8 +17,29 @@ def run_automation():
     history = json.load(open(history_file, 'r')) if os.path.exists(history_file) else []
     sent_emails = {entry['email'] for entry in history}
 
+    # --- NAYA LOGIC YAHAN ADD KIYA GAYA HAI ---
+    contacts = []
     with open('emails.txt', 'r', encoding='utf-8') as f:
-        contacts = [line.strip().split(',') for line in f if line.strip()]
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue # Khali line ko skip karein
+            
+            parts = line.split(',')
+            
+            if len(parts) >= 2:
+                # Agar name aur email dono hain (e.g., "Rahul, rahul@gmail.com")
+                name = parts[0].strip()
+                email = parts[1].strip()
+            else:
+                # Agar sirf email hai aur naam nahi hai (e.g., "rahul@gmail.com")
+                name = "Friend" # Aap isko apne hisaab se "User", "Mate" etc. change kar sakte hain
+                email = parts[0].strip()
+            
+            # Sirf unko add karein jisme '@' ho taaki galat text add na ho
+            if "@" in email:
+                contacts.append((name, email))
+    # ------------------------------------------
 
     with open('messages.txt', 'r', encoding='utf-8') as f:
         raw_content = f.read()
@@ -48,7 +69,7 @@ def run_automation():
 
             msg = MIMEMultipart()
             msg['Subject'] = subject_line
-            msg['From'] = f"Pushpendra <{sender_email}>"
+            msg['From'] = f"Ethan<{sender_email}>"
             msg['To'] = email
             msg.attach(MIMEText(body_text, 'plain'))
 
@@ -61,7 +82,7 @@ def run_automation():
                 "subject": subject_line,
                 "status": "Sent"
             })
-            print(f"Email sent to: {name}")
+            print(f"Email sent to: {email} (Name used: {name})")
 
     with open(history_file, 'w', encoding='utf-8') as f:
         json.dump(history, f, indent=4)
